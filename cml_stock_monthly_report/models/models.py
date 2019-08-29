@@ -1,14 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
-#
-#    For Module Support : devintelle@gmail.com  or Skype : devintelle 
-#
-##############################################################################
 
 from odoo import models, fields, api
+
 from odoo.exceptions import ValidationError
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
@@ -18,10 +11,9 @@ import xlwt
 from xlwt import easyxf
 import base64
 # =====================
+class cml_stock_monthly_report(models.TransientModel):
+    _name = 'cml_stock_monthly.report'
 
-class inventory_wizard(models.TransientModel):
-    _name = 'inventory.age.wizard'
-    
     date_from = fields.Date('Date', required="1", default=fields.Date.today)
     company_id = fields.Many2one('res.company', string='Company', required="1", default=lambda self:self.env.user.company_id.id)
     warehouse_ids = fields.Many2many('stock.warehouse', string='Warehouse', required="1", default=lambda self: self.env['stock.warehouse'].search([], limit=1))
@@ -255,7 +247,7 @@ class inventory_wizard(models.TransientModel):
             active_id = self.ids[0]
             return {
                 'type': 'ir.actions.act_url',
-                'url': 'web/content/?model=inventory.age.wizard&download=true&field=excel_file&id=%s&filename=%s' % (
+                'url': 'web/content/?model=cml_stock_aging.report&download=true&field=excel_file&id=%s&filename=%s' % (
                     active_id, filename),
                 'target': 'new',
             }

@@ -1,0 +1,45 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="cml_stock_daily_report.list">
+      <field name="name">Stock Daily Report</field>
+        <field name="model">cml_stock_daily.report</field>
+        <field name="arch" type="xml">
+        <form string="Report Options">
+          <separator string="Stock Daily Report"/>
+          <group>
+              <group>
+                <field name="company_id"/>
+                <field name="warehouse_ids" domain="[('company_id','=',company_id)]" widget="many2many_tags"/>
+              </group>
+              <group>
+                <field name="from_date"/>
+                <field name="to_date"/>
+              </group>
+          </group>
+          <group string="Location">
+              <field name="location_ids"/>
+          </group>
+          <footer>
+              <button string="Print Excel" name="print_excel" type="object" class="oe_highlight"/>
+              or
+              <button string="Cancel" class="oe_link" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="cml_stock_daily_report.action_window">
+      <field name="name">Stock Daily Report</field>
+      <field name="res_model">cml_stock_daily.report</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="cml_stock_daily_report.list"/>
+      <field name="context">{}</field>
+      <field name="target">new</field>
+    </record>
+
+    <menuitem name="Stock Daily Report" id="cml_stock_daily_report" parent="stock.menu_warehouse_report" 
+      action="cml_stock_daily_report.action_window" />
+  </data>
+</odoo>
